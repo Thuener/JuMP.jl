@@ -62,7 +62,8 @@ abstract AbstractModel
 type Model <: AbstractModel
     obj#::QuadExpr
     objSense::Symbol
-
+    
+    storeconstr::Bool
     linconstr#::Vector{LinearConstraint}
     quadconstr
     sosconstr
@@ -145,6 +146,7 @@ function Model(;solver=UnsetSolver(), simplify_nonlinear_expressions::Bool=false
     end
     Model(zero(QuadExpr),              # obj
           :Min,                        # objSense
+          true,                        # storeconstr
           LinearConstraint[],          # linconstr
           QuadConstraint[],            # quadconstr
           SOSConstraint[],             # sosconstr
