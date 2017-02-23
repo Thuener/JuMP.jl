@@ -168,7 +168,9 @@ function Base.copy(c::LinearConstraint, new_model::Model)
 end
 
 function addconstraint(m::Model, c::LinearConstraint)
-    push!(m.linconstr,c)
+    if m.storeconstr
+        push!(m.linconstr,c)
+    end
     if m.internalModelLoaded
         if method_exists(MathProgBase.addconstr!, (typeof(m.internalModel),Vector{Int},Vector{Float64},Float64,Float64))
             assert_isfinite(c.terms)
